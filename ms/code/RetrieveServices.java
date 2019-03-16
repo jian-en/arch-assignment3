@@ -29,11 +29,11 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 { 
     // Set up the JDBC driver name and database URL
     static final String JDBC_CONNECTOR = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost/ms_orderinfo?autoReconnect=true&useSSL=false";
+    static final String DB_URL = "jdbc:mysql://mysql-container/ms_orderinfo?autoReconnect=true&useSSL=false";
 
     // Set up the orderinfo database credentials
     static final String USER = "root";
-    static final String PASS = "password"; //replace with your MySQL root password
+    static final String PASS = "tmp"; //replace with your MySQL root password
 
     // Do nothing constructor
     public RetrieveServices() throws RemoteException {}
@@ -93,7 +93,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
             stmt = conn.createStatement();
             
             String sql;
-            sql = "SELECT * FROM Orders";
+            sql = "SELECT * FROM orders";
             ResultSet rs = stmt.executeQuery(sql);
 
             //Extract data from result set
@@ -172,7 +172,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
             stmt = conn.createStatement();
             
             String sql;
-            sql = "SELECT * FROM Orders where order_id=" + orderid;
+            sql = "SELECT * FROM orders where order_id=" + orderid;
             ResultSet rs = stmt.executeQuery(sql);
 
             // Extract data from result set. Note there should only be one for this method.

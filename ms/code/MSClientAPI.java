@@ -38,7 +38,7 @@ public class MSClientAPI
 
 	public String retrieveOrders() throws Exception
 	{
-           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("RetrieveServices");  
+           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
            response = obj.retrieveOrders();
            return(response);
 	}
@@ -54,7 +54,7 @@ public class MSClientAPI
 
 	public String retrieveOrders(String id) throws Exception
 	{
-           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("RetrieveServices");  
+           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
            response = obj.retrieveOrders(id);
            return(response);	
 
@@ -68,7 +68,7 @@ public class MSClientAPI
 
    	public String newOrder(String Date, String FirstName, String LastName, String Address, String Phone) throws Exception
 	{
-           CreateServicesAI obj = (CreateServicesAI) Naming.lookup("CreateServices"); 
+           CreateServicesAI obj = (CreateServicesAI) Naming.lookup("rmi://create-server:1099/CreateServices"); 
            response = obj.newOrder(Date, FirstName, LastName, Address, Phone);
            return(response);	
 		

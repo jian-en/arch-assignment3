@@ -1,0 +1,35 @@
+version: '2.1'
+
+services:
+  client:
+    build: code/
+    command: bash -c "java OrdersUI"
+    tty: true
+    stdin_open: true
+
+  retrieve-server:
+    command: bash -c "./start_retrieve.sh"
+    build: code/
+    depends_on:
+     mysql-container:
+        condition: service_healthy
+
+  create-server:
+    command: bash -c "./start_create.sh"
+    build: code/
+    depends_on:
+    depends_on:
+     mysql-container:
+        condition: service_healthy
+
+  mysql-container:
+    build: ../Database/
+    volumes:
+     - mysql-storage:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
+volumes:
+  mysql-storage:

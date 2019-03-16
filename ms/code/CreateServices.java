@@ -28,11 +28,11 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 { 
     // Set up the JDBC driver name and database URL
     static final String JDBC_CONNECTOR = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost/ms_orderinfo?autoReconnect=true&useSSL=false";
+    static final String DB_URL = "jdbc:mysql://mysql-container/ms_orderinfo?autoReconnect=true&useSSL=false";
 
     // Set up the orderinfo database credentials
     static final String USER = "root";
-    static final String PASS = "password"; //replace with your MySQL root password
+    static final String PASS = "tmp"; //replace with your MySQL root password
 
     // Do nothing constructor
     public CreateServices() throws RemoteException {}
@@ -90,7 +90,7 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
             stmt = conn.createStatement();
             
-            String sql = "INSERT INTO ORDERS(order_date, first_name, last_name, address, phone) VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
+            String sql = "INSERT INTO orders(order_date, first_name, last_name, address, phone) VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
 
             // execute the update
 

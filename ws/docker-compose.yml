@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+  client:
+    build: client/
+    tty: true
+    stdin_open: true
+    depends_on:
+     - server
+  server:
+    build: server/
+    ports: 
+     - "3000:3000"
+    depends_on:
+      mysql-container:
+        condition: service_healthy
+  mysql-container:
+    build: ../Database/
+    volumes:
+     - mysql-storage:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
+volumes:
+  mysql-storage:
