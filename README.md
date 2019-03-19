@@ -1,4 +1,8 @@
-# How to develop the project
+# How to evaluate and test the project
+
+----------------------------------------
+
+# How to develop the project in docker-compose
 ## Web Services
 1. Go to **ws** folder
 2. Run *docker-compose up --build --detach*
@@ -10,5 +14,3 @@
 2. Run *docker-compose up --build --detach*
 3. Run *docker attach ms_client_1*
 4. Input 1, 2, 3, X to interact
-
-# How to evaluate and test the project
