@@ -8,6 +8,10 @@ services:
      - server
   server:
     build: server/
+    command: node Server.js
+    volumes: 
+     - ./server:/usr/app
+     - /usr/app/node_modules
     ports: 
      - "3000:3000"
     depends_on:
