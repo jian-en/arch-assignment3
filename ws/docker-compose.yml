@@ -2,10 +2,13 @@ version: '2.1'
 services:
   client:
     build: client/
+    command: bash -c "javac *.java && java OrdersUI"
     tty: true
     stdin_open: true
     depends_on:
      - server
+    volumes:
+     - ./client:/var/www/java
   server:
     build: server/
     command: node Server.js
