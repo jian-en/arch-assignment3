@@ -64,7 +64,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
     });
 
     // GET for /orders/order id specifier - returns the order for the provided order ID
-    // req paramdter is the request object
+    // req parameter is the request object
     // res parameter is the response object
      
     router.get("/orders/:order_id",function(req,res){
@@ -101,6 +101,14 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
         });
     });
 
+
+    // DELETE for /orders?order_id - remove an order with specific order ID
+    // req parameter is the request object
+    // res parameter is the response object
+
+    router.delete("/orders/:order_id", function(req, res) {
+        res.json({"Error" : false, "Message" : "Success"});
+    });
 }
 
 // The next line just makes this module available... think of it as a kind package statement in Java
