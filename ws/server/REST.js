@@ -107,7 +107,18 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
     // res parameter is the response object
 
     router.delete("/orders/:order_id", function(req, res) {
-        res.json({"Error" : false, "Message" : "Success"});
+        var order_id = req.params.order_id;
+        console.log("Deleting order with order ID: ", order_id);
+        var query = "DELETE FROM ?? WHERE ??=?";
+        var table = ["orders", "order_id", order_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows){
+            if(err) {
+                res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+            } else {
+                res.json({"Error" : false, "Message" : "Removed " + rows.affectedRows + " row(s) successfully."});
+            }
+        });
     });
 }
 
