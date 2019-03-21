@@ -7,6 +7,13 @@ services:
     tty: true
     stdin_open: true
 
+  delete-server:
+    build: code/
+    command: bash -c "./start_delete.sh"
+    depends_on:
+     mysql-container:
+        condition: service_healthy
+
   retrieve-server:
     command: bash -c "./start_retrieve.sh"
     build: code/
@@ -17,7 +24,6 @@ services:
   create-server:
     command: bash -c "./start_create.sh"
     build: code/
-    depends_on:
     depends_on:
      mysql-container:
         condition: service_healthy
