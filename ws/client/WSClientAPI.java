@@ -156,4 +156,15 @@ public class WSClientAPI
 		return(response.toString());
 		
     } // newOrder
+
+    /********************************************************************************
+	* Description: Delete a order with specific ID in the database
+	* Parameters: order ID
+	* Returns: String that contains the status of the DELETE operation
+	********************************************************************************/
+
+	public String deleteOrder(String id) throws Exception
+	{
+		return "";
+	}
 } // WSClientAPI
