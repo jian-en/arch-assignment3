@@ -11,7 +11,7 @@ services:
      - ./client:/var/www/java
   server:
     build: server/
-    command: node Server.js
+    command: bash -c "node Server.js"
     volumes: 
      - ./server:/usr/app
      - /usr/app/node_modules

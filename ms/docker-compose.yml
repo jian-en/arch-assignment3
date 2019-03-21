@@ -3,7 +3,7 @@ version: '2.1'
 services:
   client:
     build: code/
-    command: bash -c "java OrdersUI"
+    command: bash -c "javac *.java && java OrdersUI"
     tty: true
     stdin_open: true
 
