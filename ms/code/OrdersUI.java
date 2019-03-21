@@ -33,6 +33,8 @@ public class OrdersUI
 		boolean error = false;						// error flag
 		char    option;								// Menu choice from user
 		Console c = System.console();				// Press any key
+		String  username = null;                    // Input username
+		String  password = null;                    // Input password
 		String  date = null;						// order date
 		String  first = null;						// customer first name
 		String  last = null;						// customer last name
@@ -50,13 +52,30 @@ public class OrdersUI
 		/////////////////////////////////////////////////////////////////////////////////
 
 		while (!done)
-		{	
-			// Here, is the main menu set of choices
+		{
+			// Pre: authentication process
+			if (!api.authFlag) {
+				System.out.println("Enter your username: \n");
+				username = keyboard.nextLine();
+				System.out.println("Enter your password: \n");
+				password = keyboard.nextLine();
+				try {
+					if (api.authenticateUser(username, password))
+						System.out.println("You are authenticated!! \n");
+					else {
+						System.out.println("You have input the wrong username/password!! \n");
+						continue;
+					}
+				} catch (Exception e) {
+					System.out.println("Request failed:: " + e);
+				}
+			}
 
+			// Here, is the main menu set of choices
 			System.out.println( "\n\n\n\n" );
 			System.out.println( "Orders Database User Interface: \n" );
 			System.out.println( "Select an Option: \n" );
-			System.out.println( "1: Retrieve all orders in the order database." );
+			System.out.println( "1: Retrieve all orders in the order databases." );
 			System.out.println( "2: Retrieve an order by ID." );
 			System.out.println( "3: Add a new order to the order database." );				
 			System.out.println( "X: Exit\n" );

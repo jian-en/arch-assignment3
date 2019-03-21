@@ -59,13 +59,27 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
     } // main
 
+    // Authenticate with given credentials using authenticateServices
+    private boolean authenticate(String username, String password) throws Exception {
+        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+        return obj.authenticateUser(username, password);
+    }
 
     // Inplmentation of the abstract classes in RetrieveServicesAI happens here.
 
     // This method add the entry into the ms_orderinfo database
 
-    public String newOrder(String idate, String ifirst, String ilast, String iaddress, String iphone) throws RemoteException
+    public String newOrder(String idate, String ifirst, String ilast, String iaddress, String iphone, String username, String password) throws RemoteException
     {
+
+        // Authenticate first
+        try {
+            if (!authenticate(username, password))
+                return "Error: authentication failed!";
+        } catch (Exception e) {
+            System.out.println("Authentication failed:: " + e);
+        }
+
       	// Local declarations
 
         Connection conn = null;		                 // connection to the orderinfo database

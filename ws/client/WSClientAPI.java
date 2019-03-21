@@ -21,14 +21,10 @@
 ******************************************************************************************************************/
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 
 public class WSClientAPI
 {
@@ -37,6 +33,11 @@ public class WSClientAPI
 	* Parameters: None
 	* Returns: String of all the current orders in the orderinfo database
 	********************************************************************************/
+	private String token = "";
+
+	public void authenticate(String username, String password) throws Exception
+	{
+	}
 
 	public String retrieveOrders() throws Exception
 	{
@@ -49,6 +50,7 @@ public class WSClientAPI
 
 		//Form the request header and instantiate the response code
 		con.setRequestMethod("GET");
+		con.setRequestProperty("Authorization", String.format("Basic %s", token));
 		int responseCode = con.getResponseCode();
 
 
@@ -86,6 +88,7 @@ public class WSClientAPI
 
 		//Form the request header and instantiate the response code
 		con.setRequestMethod("GET");
+		con.setRequestProperty("Authorization", String.format("Basic %s", token));
 		int responseCode = con.getResponseCode();
 
 		//Set up a buffer to read the response from the server
@@ -123,6 +126,7 @@ public class WSClientAPI
 
 		//Configure the POST connection for the parameters
 		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Authorization", String.format("Basic %s", token));
         conn.setRequestProperty("Accept-Language", "en-GB,en;q=0.5");
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-length", Integer.toString(input.length()));

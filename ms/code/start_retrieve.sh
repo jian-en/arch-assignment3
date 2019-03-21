@@ -1,3 +1,4 @@
 rmiregistry &
-sleep 5
+Sleep 5
+javac *.java
 java RetrieveServices

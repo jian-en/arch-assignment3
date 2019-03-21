@@ -26,6 +26,7 @@
 ******************************************************************************************************************/
 
 var mysql   = require("mysql");     //Database
+var userService = require('./UserService');
 
 function REST_ROUTER(router,connection) {
     var self = this;
@@ -36,9 +37,21 @@ function REST_ROUTER(router,connection) {
 // contents of the URL
 
 REST_ROUTER.prototype.handleRoutes= function(router,connection) {
+    // POST with username and password to authenticate the user
+    // req parameter is the request object
+    // res parameter is the response object
+    router.post("/authenticate",function (req,res) {
+        user = userService.authenticate(req.body);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(400).json({ message: 'Username or password is incorrect!' });
+        }
+
+    });
 
     // GET with no specifier - returns system version information
-    // req paramdter is the request object
+    // req parameter is the request object
     // res parameter is the response object
 
     router.get("/",function(req,res){

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="javalib">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Github/cs61b/repo/javalib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Github/cs61b/repo/javalib" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Github/cs61b/repo/javalib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Github/cs61b/repo/javalib" recursive="false" type="SOURCES" />
+  </library>
+</component>
