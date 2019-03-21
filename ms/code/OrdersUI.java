@@ -17,6 +17,7 @@
 *	- MSlientAPI - this class provides an interface to a set of microservices
 *	- RetrieveServices - this is the server-side micro service for retrieving info from the ms_orders database
 *	- CreateServices - this is the server-side micro service for creating new orders in the ms_orders database
+*	- DeleteServices - this is the server-side micro service for deleting an order in the ms_orders database
 *
 ******************************************************************************************************************/
 
