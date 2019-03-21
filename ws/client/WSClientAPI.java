@@ -158,7 +158,7 @@ public class WSClientAPI
     } // newOrder
 
     /********************************************************************************
-	* Description: Delete a order with specific ID in the database
+	* Description: Delete an order with specific ID in the database
 	* Parameters: order ID
 	* Returns: String that contains the status of the DELETE operation
 	********************************************************************************/

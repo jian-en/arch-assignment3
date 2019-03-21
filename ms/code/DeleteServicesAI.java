@@ -27,7 +27,7 @@ import java.rmi.*;
 public interface DeleteServicesAI extends java.rmi.Remote
 {
 	/*******************************************************
-	* Delete a new order from the provided arguments.
+	* Delete an order from the provided arguments.
 	* Returns an OK message or an error string.
 	*******************************************************/
 

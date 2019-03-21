@@ -200,7 +200,6 @@ public class OrdersUI
 				{
 					Integer.parseInt(orderid);
 					error = false;
-
 				} catch (NumberFormatException e) {
 					System.out.println( "Not a number, please try again..." );
 					System.out.println("\nPress enter to continue..." );
@@ -210,7 +209,6 @@ public class OrdersUI
 				{
 					response = api.deleteOrder(orderid);
 					System.out.println(response);
-
 				} catch (Exception e) {
 					System.out.println("Request failed:: " + e);
 				}

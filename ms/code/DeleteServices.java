@@ -113,4 +113,4 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
 
     } //delete order
 
-} // RetrieveServices
+} // DeleteServices
