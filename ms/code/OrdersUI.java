@@ -75,7 +75,7 @@ public class OrdersUI
 			System.out.println( "\n\n\n\n" );
 			System.out.println( "Orders Database User Interface: \n" );
 			System.out.println( "Select an Option: \n" );
-			System.out.println( "1: Retrieve all orders in the order databases." );
+			System.out.println( "1: Retrieve all orders in the order database." );
 			System.out.println( "2: Retrieve an order by ID." );
 			System.out.println( "3: Add a new order to the order database." );				
 			System.out.println( "X: Exit\n" );
