@@ -43,6 +43,8 @@ public class OrdersUI
 		DateTimeFormatter dtf = null;				// Date object formatter
 		LocalDate localDate = null;					// Date object
 		WSClientAPI api = new WSClientAPI();	// RESTful api object
+		String username = null;
+		String password = null;
 
 		/////////////////////////////////////////////////////////////////////////////////
 		// Main UI loop
@@ -50,6 +52,23 @@ public class OrdersUI
 
 		while (!done)
 		{	
+			// Pre: authentication process
+			if (!api.authFlag) {
+				System.out.println("Enter your username: \n");
+				username = keyboard.nextLine();
+				System.out.println("Enter your password: \n");
+				password = keyboard.nextLine();
+				try {
+					if (!api.authenticateUser(username, password)){
+						System.out.println( "Invalid user credentials!\n" );
+						continue;
+					}
+
+				} catch (Exception e) {
+					System.out.println("Incorrect User Credentials! Try again.\n");
+					continue;
+				}
+			}
 			// Here, is the main menu set of choices
 
 			System.out.println( "\n\n\n\n" );
