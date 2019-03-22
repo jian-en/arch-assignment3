@@ -1,4 +1,21 @@
-//import jdk.internal.instrumentation.Logger;
+/******************************************************************************************************************
+ * File:LogToFile.java
+ * Course: 17655
+ * Project: Assignment A3
+ * Copyright: Copyright (c) 2018 Carnegie Mellon University
+ * Versions:
+ *	1.0 March 2019 - Initial write of assignment 3.
+ *
+ * Description: This class is used to provide Logger object instance and the methods for other classes to access.
+ *
+ * Parameters: String - logfile name
+ *
+ * Internal Methods: None
+ *  void logInfo() - log INFO level messages to the log file
+ *  void logError() - log ERROR level messages to the log file
+ *
+ * External Dependencies: None
+ ******************************************************************************************************************/
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
