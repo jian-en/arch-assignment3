@@ -48,7 +48,7 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
         { 
             DeleteServices obj = new DeleteServices();
 
-            // Bind this object instance to the name RetrieveServices in the rmiregistry 
+            // Bind this object instance to the name DeleteServices in the rmiregistry
             Naming.rebind("//localhost:1099/DeleteServices", obj); 
 
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
     } // main
 
 
-    // Inplmentation of the abstract classes in RetrieveServicesAI happens here.
+    // Inplmentation of the abstract classes in DeleteServicesAI happens here.
 
     // This method add the entry into the ms_orderinfo database
 

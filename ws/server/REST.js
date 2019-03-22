@@ -102,7 +102,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
     });
 
 
-    // DELETE for /orders?order_id - remove an order with specific order ID
+    // DELETE for /orders/order id specifier - remove an order with specific order ID
     // req parameter is the request object
     // res parameter is the response object
 

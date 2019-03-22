@@ -196,17 +196,22 @@ public class OrdersUI
 
 			if ( option == '4' )
 			{
-				System.out.print( "Enter the order ID: " );
-				orderid = keyboard.nextLine();
-				try
-				{
-					Integer.parseInt(orderid);
-					error = false;
+				error = true;
 
-				} catch (NumberFormatException e) {
-					System.out.println( "Not a number, please try again..." );
-					System.out.println("\nPress enter to continue..." );
-				} // try
+				while (error)
+				{
+					System.out.print( "\nEnter the order ID: " );
+					orderid = keyboard.nextLine();
+
+					try
+					{
+						Integer.parseInt(orderid);
+						error = false;
+					} catch (NumberFormatException e) {
+						System.out.println( "Not a number, please try again..." );
+					} // if
+
+				} // while
 
 				try
 				{
