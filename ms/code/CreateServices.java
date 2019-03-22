@@ -20,7 +20,7 @@
 	- orderinfo database 
 ******************************************************************************************************************/
 import java.rmi.Naming; 
-import java.rmi.RemoteException; 
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
@@ -33,6 +33,9 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
     // Set up the orderinfo database credentials
     static final String USER = "root";
     static final String PASS = "tmp"; //replace with your MySQL root password
+
+    // create new log file
+    LogToFile logger = new LogToFile("./microservice_create");
 
     // Do nothing constructor
     public CreateServices() throws RemoteException {}
@@ -74,6 +77,7 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
         							                 // if not you get an error string
         try
         {
+
             // Here we load and initialize the JDBC connector. Essentially a static class
             // that is used to provide access to the database from inside this class.
 
@@ -90,11 +94,17 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
             stmt = conn.createStatement();
             
-            String sql = "INSERT INTO orders(order_date, first_name, last_name, address, phone) VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
+            String sql = "INSERT INTO orders(order_date, first_name, last_name, address, phone) " +
+                    "VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
+
+            // log new order information
+            logger.log("New order requested - \n" +
+                    "order date: "+idate+", first_name: "+ifirst+", last_name: "+ilast+", address: "+iaddress+", phone: "+iphone) ;
 
             // execute the update
 
             stmt.executeUpdate(sql);
+            logger.log("New order successfully created!");
 
             // clean up the environment
 
@@ -106,6 +116,8 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
         } catch(Exception e) {
 
             ReturnString = e.toString();
+
+            logger.log("An error has occur when creating order: " + e);
         } 
         
         return(ReturnString);
