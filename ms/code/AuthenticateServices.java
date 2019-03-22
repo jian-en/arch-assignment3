@@ -1,29 +1,28 @@
 /******************************************************************************************************************
- * File: RetrieveServices.java
+ * File: AuthenticateServices.java
  * Course: 17655
  * Project: Assignment A3
  * Copyright: Copyright (c) 2018 Carnegie Mellon University
  * Versions:
  *	1.0 February 2018 - Initial write of assignment 3 (ajl).
  *
- * Description: This class provides the concrete implementation of the retrieve micro services. These services run
+ * Description: This class provides the concrete implementation of the authenticate micro services. These services run
  * in their own process (JVM).
  *
  * Parameters: None
  *
  * Internal Methods:
- *  String retrieveOrders() - gets and returns all the orders in the orderinfo database
- *  String retrieveOrders(String id) - gets and returns the order associated with the order id
+ *  String authenticateUser(username, password) - This method authenticates the user with username
+ *  and password.
  *
  * External Dependencies:
  *	- rmiregistry must be running to start this server
- *	= MySQL
- - orderinfo database
+ *	- MySQL
+ *  - orderinfo database
  ******************************************************************************************************************/
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.*;
 
 public class AuthenticateServices extends UnicastRemoteObject implements AuthenticateServicesAI
 {

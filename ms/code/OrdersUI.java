@@ -60,16 +60,16 @@ public class OrdersUI
 				System.out.println("Enter your password: \n");
 				password = keyboard.nextLine();
 				try {
-					if (api.authenticateUser(username, password))
-						System.out.println("You are authenticated!! \n");
-					else {
-						System.out.println("You have input the wrong username/password!! \n");
+					if (!api.authenticateUser(username, password)){
+						System.out.println( "Invalid user credentials!\n" );
 						continue;
 					}
 				} catch (Exception e) {
-					System.out.println("Request failed:: " + e);
+					System.out.println("Incorrect User Credentials! Try again.\n");
+					continue;
 				}
 			}
+
 
 			// Here, is the main menu set of choices
 			System.out.println( "\n\n\n\n" );
