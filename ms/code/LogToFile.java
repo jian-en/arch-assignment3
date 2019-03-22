@@ -26,12 +26,20 @@ public class LogToFile {
     }
 
     /*
-     * log method to log given message string to the log file created.
-     * We will use this for both info and error logging, as the java.util package does not have logger.error() method.
+     * log method to log given non-error message string to the log file created.
      * @param message the message string to be logged into the file
      */
-    public void log(String message)
+    public void logInfo(String message)
     {
         LOGGER.info(message);
+    }
+
+    /*
+     * log method to log given error message string to the log file created.
+     * @param message the error message string to be logged into the file
+     */
+    public void logError(String message)
+    {
+        LOGGER.severe(message);
     }
 }

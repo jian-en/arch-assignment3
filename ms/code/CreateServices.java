@@ -98,13 +98,13 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
                     "VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
 
             // log new order information
-            logger.log("New order requested - \n" +
-                    "order date: "+idate+", first_name: "+ifirst+", last_name: "+ilast+", address: "+iaddress+", phone: "+iphone) ;
+            logger.logInfo("New order requested - \n" +
+                    "order date: "+idate+", first_name: "+ifirst+", last_name: "+ilast+", address: "+iaddress+", phone: "+iphone); ;
 
             // execute the update
 
             stmt.executeUpdate(sql);
-            logger.log("New order successfully created!");
+            logger.logInfo("New order successfully created!");
 
             // clean up the environment
 
@@ -117,7 +117,7 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
             ReturnString = e.toString();
 
-            logger.log("An error has occur when creating order: " + e);
+            logger.logError("An error has occur when creating order: " + e);
         } 
         
         return(ReturnString);
