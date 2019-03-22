@@ -2,9 +2,9 @@
  * File: AuthenticateServices.java
  * Course: 17655
  * Project: Assignment A3
- * Copyright: Copyright (c) 2018 Carnegie Mellon University
+ * Copyright: Copyright (c) 2019 Carnegie Mellon University
  * Versions:
- *	1.0 February 2018 - Initial write of assignment 3 (ajl).
+ *	1.0 March 2019 - Initial write of assignment 3 (fj).
  *
  * Description: This class provides the concrete implementation of the authenticate micro services. These services run
  * in their own process (JVM).
