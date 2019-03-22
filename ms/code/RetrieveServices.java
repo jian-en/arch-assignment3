@@ -35,6 +35,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
     static final String USER = "root";
     static final String PASS = "tmp"; //replace with your MySQL root password
 
+    // Create new log file
+    LogToFile logger = new LogToFile("./microservice_retrieve");
+
     // Do nothing constructor
     public RetrieveServices() throws RemoteException {}
 
@@ -75,6 +78,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
         							// if not you get an error string
         try
         {
+            //Log the retrieve request
+            logger.log("User requests to retrieve all orders from the database.");
+
             // Here we load and initialize the JDBC connector. Essentially a static class
             // that is used to provide access to the database from inside this class.
 
@@ -123,6 +129,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 
             ReturnString = ReturnString +"]";
 
+            //Log the orders that are retrieved
+            logger.log("User successfully retrieved all the orders from database - \n" + ReturnString);
+
             //Clean-up environment
 
             rs.close();
@@ -134,6 +143,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
         } catch(Exception e) {
 
             ReturnString = e.toString();
+
+            //log error info
+            logger.log("An error has occur when retrieving all orders from database: " + e);
         } 
         
         return(ReturnString);
@@ -154,6 +166,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 
         try
         {
+            //Log the retrieve request
+            logger.log("User requests to retrieve the order with order id: " + orderid);
+
             // Here we load and initialize the JDBC connector. Essentially a static class
             // that is used to provide access to the database from inside this class.
 
@@ -203,6 +218,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 
             ReturnString = ReturnString +"]";
 
+            //Log the order that is retrieved
+            logger.log("User successfully retrieved the following order - \n" + ReturnString);
+
             //Clean-up environment
 
             rs.close();
@@ -214,6 +232,9 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
         } catch(Exception e) {
 
             ReturnString = e.toString();
+
+            //log error info
+            logger.log("An error has occur when retrieving order (id - "+orderid+ "): "+e);
 
         } 
 
