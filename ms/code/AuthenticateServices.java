@@ -46,7 +46,7 @@ public class AuthenticateServices extends UnicastRemoteObject implements Authent
     {
       AuthenticateServices obj = new AuthenticateServices();
 
-      // Bind this object instance to the name RetrieveServices in the rmiregistry
+      // Bind this object instance to the name AuthenticateServices in the rmiregistry
       Naming.rebind("//localhost:1099/AuthenticateServices", obj);
 
     } catch (Exception e) {
