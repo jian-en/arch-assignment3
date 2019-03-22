@@ -156,4 +156,41 @@ public class WSClientAPI
 		return(response.toString());
 		
     } // newOrder
+
+    /********************************************************************************
+	* Description: Delete an order with specific ID in the database
+	* Parameters: order ID
+	* Returns: String that contains the status of the DELETE operation
+	********************************************************************************/
+
+	public String deleteOrder(String id) throws Exception
+	{
+		// Set up the URL and connect to the node server
+		URL url = new URL("http://server:3000/api/orders/"+id);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		//Configure the POST connection for the parameters
+		conn.setRequestMethod("DELETE");
+		conn.setRequestProperty("Accept-Language", "en-GB,en;q=0.5");
+		conn.setRequestProperty("charset", "utf-8");
+
+		//Loop through the input and build the response string.
+		//When done, close the stream.
+		BufferedReader in = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		//Loop through the input and build the response string.
+		//When done, close the stream.
+
+		while ((inputLine = in.readLine()) != null)
+		{
+			response.append(inputLine);
+		}
+
+		in.close();
+		conn.disconnect();
+
+		return(response.toString());
+	}
 } // WSClientAPI
