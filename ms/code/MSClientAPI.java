@@ -21,8 +21,7 @@
 * External Dependencies: None
 ******************************************************************************************************************/
 
-import java.rmi.Naming; 
-import java.rmi.RemoteException;
+import java.rmi.Naming;
 
 public class MSClientAPI
 {
@@ -107,7 +106,7 @@ public class MSClientAPI
 	public String deleteOrder(String id) throws Exception
 	{
            DeleteServicesAI obj = (DeleteServicesAI) Naming.lookup("rmi://delete-server:1099/DeleteServices");
-           response = obj.deleteOrder(id);
+           response = obj.deleteOrder(id, cachedUsername, cachedPassword);
            return(response);
     }
 }

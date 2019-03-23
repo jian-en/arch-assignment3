@@ -79,6 +79,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
                 return "Error: authentication failed!";
         } catch (Exception e) {
             System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
         }
 
       	// Local declarations
@@ -165,6 +166,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
                 return "Error: authentication failed!";
         } catch (Exception e) {
             System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
         }
 
       	// Local declarations

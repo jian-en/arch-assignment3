@@ -59,13 +59,28 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
 
     } // main
 
+    // Authenticate with given credentials using authenticateServices
+    private boolean authenticate(String username, String password) throws Exception {
+        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+        return obj.authenticateUser(username, password);
+    }
 
-    // Inplmentation of the abstract classes in DeleteServicesAI happens here.
+
+    // Implmentation of the abstract classes in DeleteServicesAI happens here.
 
     // This method add the entry into the ms_orderinfo database
 
-    public String deleteOrder(String id) throws RemoteException
+    public String deleteOrder(String id, String username, String password) throws RemoteException
     {
+        // Authenticate first
+        try {
+            if (!authenticate(username, password))
+                return "Error: authentication failed!";
+        } catch (Exception e) {
+            System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
+        }
+
       	// Local declarations
 
         Connection conn = null;		                 // connection to the orderinfo database

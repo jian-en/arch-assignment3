@@ -78,6 +78,7 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
                 return "Error: authentication failed!";
         } catch (Exception e) {
             System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
         }
 
       	// Local declarations
