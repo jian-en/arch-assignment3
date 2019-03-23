@@ -9,6 +9,13 @@ services:
     volumes:
       - ./code:/var/www/java
 
+  delete-server:
+    build: code/
+    command: bash -c "./start_delete.sh"
+    depends_on:
+     mysql-container:
+        condition: service_healthy
+
   retrieve-server:
     command: bash -c "./start_retrieve.sh"
     build: code/
@@ -23,6 +30,7 @@ services:
     build: code/
     volumes:
       - ./code:/var/www/java
+
     depends_on:
      mysql-container:
         condition: service_healthy

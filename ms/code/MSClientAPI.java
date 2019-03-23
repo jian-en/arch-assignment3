@@ -97,4 +97,17 @@ public class MSClientAPI
 		
     }
 
+
+    /********************************************************************************
+	* Description: Delete an order with specific ID in the orderinfo database
+	* Parameters: None
+	* Returns: String that contains the status of the delete operatation
+	********************************************************************************/
+
+	public String deleteOrder(String id) throws Exception
+	{
+           DeleteServicesAI obj = (DeleteServicesAI) Naming.lookup("rmi://delete-server:1099/DeleteServices");
+           response = obj.deleteOrder(id);
+           return(response);
+    }
 }
