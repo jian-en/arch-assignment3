@@ -1,18 +1,19 @@
 /******************************************************************************************************************
-* File: CreateServices.java
+* File: DeleteServices.java
 * Course: 17655
 * Project: Assignment A3
 * Copyright: Copyright (c) 2018 Carnegie Mellon University
 * Versions:
-*	1.0 February 2018 - Initial write of assignment 3 (ajl).
+*	1.0 March 2019 - Initial write of assignment 3 (JTC).
+ *	1.1 March 2019 - Updated logging function (BKW/IZ).
 *
-* Description: This class provides the concrete implementation of the create micro services. These services run
+* Description: This class provides the concrete implementation of the delete micro services. These services run
 * in their own process (JVM).
 *
 * Parameters: None
 *
 * Internal Methods:
-*  String newOrder() - creates an order in the ms_orderinfo database from the supplied parameters.
+*  String deleteOrder() - delete an order in the ms_orderinfo database from the supplied parameters.
 *
 * External Dependencies: 
 *	- rmiregistry must be running to start this server
@@ -20,25 +21,25 @@
 	- orderinfo database 
 ******************************************************************************************************************/
 import java.rmi.Naming; 
-import java.rmi.RemoteException;
+import java.rmi.RemoteException; 
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
-public class CreateServices extends UnicastRemoteObject implements CreateServicesAI
+public class DeleteServices extends UnicastRemoteObject implements DeleteServicesAI
 { 
     // Set up the JDBC driver name and database URL
     static final String JDBC_CONNECTOR = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://mysql-container/ms_orderinfo?autoReconnect=true&useSSL=false";
+    static final String DB_URL = "jdbc:mysql://localhost/ms_orderinfo?autoReconnect=true&useSSL=false";
 
     // Set up the orderinfo database credentials
     static final String USER = "root";
     static final String PASS = "tmp"; //replace with your MySQL root password
 
-    // create new log file
-    LogToFile logger = new LogToFile("./microservice_create");
+    // Create new log file
+    LogToFile logger = new LogToFile("./microservice_delete");
 
     // Do nothing constructor
-    public CreateServices() throws RemoteException {}
+    public DeleteServices() throws RemoteException {}
 
     // Main service loop
     public static void main(String args[]) 
@@ -49,14 +50,14 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
         try 
         { 
-            CreateServices obj = new CreateServices();
+            DeleteServices obj = new DeleteServices();
 
-            // Bind this object instance to the name RetrieveServices in the rmiregistry 
-            Naming.rebind("//localhost:1099/CreateServices", obj); 
+            // Bind this object instance to the name DeleteServices in the rmiregistry
+            Naming.rebind("//localhost:1099/DeleteServices", obj); 
 
         } catch (Exception e) {
 
-            System.out.println("CreateServices binding err: " + e.getMessage()); 
+            System.out.println("DeleteServices binding err: " + e.getMessage()); 
             e.printStackTrace();
         } 
 
@@ -64,17 +65,17 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
     // Authenticate with given credentials using authenticateServices
     private boolean authenticate(String username, String password) throws Exception {
-        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://localhost:1099/AuthenticateServices");
         return obj.authenticateUser(username, password);
     }
 
-    // Inplmentation of the abstract classes in RetrieveServicesAI happens here.
+
+    // Implmentation of the abstract classes in DeleteServicesAI happens here.
 
     // This method add the entry into the ms_orderinfo database
 
-    public String newOrder(String idate, String ifirst, String ilast, String iaddress, String iphone, String username, String password) throws RemoteException
+    public String deleteOrder(String id, String username, String password) throws RemoteException
     {
-
         // Authenticate first
         try {
             if (!authenticate(username, password))
@@ -88,11 +89,11 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
         Connection conn = null;		                 // connection to the orderinfo database
         Statement stmt = null;		                 // A Statement object is an interface that represents a SQL statement.
-        String ReturnString = "Order Created";	     // Return string. If everything works you get an 'OK' message
+        String ReturnString = " orders deleted";	 // Return string. If everything works you get an 'OK' message
         							                 // if not you get an error string
+        int rows_affected = 0;                       // part of return string, which denotes how many rows are deleted.
         try
         {
-
             // Here we load and initialize the JDBC connector. Essentially a static class
             // that is used to provide access to the database from inside this class.
 
@@ -109,17 +110,14 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
 
             stmt = conn.createStatement();
             
-            String sql = "INSERT INTO orders(order_date, first_name, last_name, address, phone) " +
-                    "VALUES (\""+idate+"\",\""+ifirst+"\",\""+ilast+"\",\""+iaddress+"\",\""+iphone+"\")";
-
-            // log new order information
-            logger.logInfo("New order requested - \n" +
-                    "order date: "+idate+", first_name: "+ifirst+", last_name: "+ilast+", address: "+iaddress+", phone: "+iphone);
+            String sql = "DELETE FROM orders WHERE order_id = " + id;
 
             // execute the update
 
-            stmt.executeUpdate(sql);
-            logger.logInfo("New order successfully created!");
+            rows_affected = stmt.executeUpdate(sql);
+
+            // Log info of order deleted
+            logger.logInfo("Order "+id+" successfully deleted from the database.");
 
             // clean up the environment
 
@@ -129,13 +127,12 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
             conn.close();
 
         } catch(Exception e) {
-
             ReturnString = e.toString();
-            logger.logError("An error has occurred when creating order: " + e.getMessage());
+            logger.logError("Order "+id+" cannot be deleted due to error: "+e.getMessage());
         } 
         
-        return(ReturnString);
+        return Integer.toString(rows_affected) + ReturnString;
 
-    } //retrieve all orders
+    } //delete order
 
-} // RetrieveServices
+} // DeleteServices
