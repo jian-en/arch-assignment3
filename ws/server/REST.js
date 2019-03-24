@@ -28,7 +28,7 @@
 
 var mysql   = require("mysql");     //Database
 const logInstance = require("./logger"); //Logging instance
-var userService = require('./UserService');
+var userService = require('./UserService'); //User
 
 function REST_ROUTER(router,connection) {
     var self = this;
