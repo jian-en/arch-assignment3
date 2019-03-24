@@ -1,5 +1,8 @@
 .idea/
 *.class
+*.log
+*.log.lck
+*.iml
 .DS_Store
 node_modules
 package-lock.json

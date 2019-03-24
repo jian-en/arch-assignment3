@@ -4,7 +4,8 @@
 * Project: Assignment A3
 * Copyright: Copyright (c) 2018 Carnegie Mellon University
 * Versions:
-*	1.0 February 2018 - Initial write of assignment 3 (ajl).
+*	1.0 March 2019 - Initial write of assignment 3 (JTC).
+ *	1.1 March 2019 - Updated logging function (BKW/IZ).
 *
 * Description: This class provides the concrete implementation of the delete micro services. These services run
 * in their own process (JVM).
@@ -33,6 +34,9 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
     // Set up the orderinfo database credentials
     static final String USER = "root";
     static final String PASS = "tmp"; //replace with your MySQL root password
+
+    // Create new log file
+    LogToFile logger = new LogToFile("./microservice_delete");
 
     // Do nothing constructor
     public DeleteServices() throws RemoteException {}
@@ -112,6 +116,9 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
 
             rows_affected = stmt.executeUpdate(sql);
 
+            // Log info of order deleted
+            logger.logInfo("Order "+id+" successfully deleted from the database.");
+
             // clean up the environment
 
             stmt.close();
@@ -120,8 +127,8 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
             conn.close();
 
         } catch(Exception e) {
-
             ReturnString = e.toString();
+            logger.logError("Order "+id+" cannot be deleted due to error: "+e.getMessage());
         } 
         
         return Integer.toString(rows_affected) + ReturnString;
