@@ -47,7 +47,7 @@ REST.prototype.connectMysql = function() {
     var self = this;
     var pool = mysql.createPool({
         connectionLimit : 100,
-        host     : 'mysql-container',
+        host     : 'localhost',
         user     : 'root',
         password : 'tmp',  // replace with your MySQL password
         database : 'ws_orderinfo',
