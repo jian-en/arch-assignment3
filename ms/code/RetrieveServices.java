@@ -160,7 +160,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
             ReturnString = e.toString();
 
             //log error info
-            logger.logError("An error has occur when retrieving all orders from database: " + e.getMessage());
+            logger.logError("An error has occurred when retrieving all orders from database: " + e.getMessage());
         } 
         
         return(ReturnString);
@@ -258,7 +258,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
             ReturnString = e.toString();
 
             //log error info
-            logger.logError("An error has occur when retrieving order (id - "+orderid+ "): "+e.getMessage());
+            logger.logError("An error has occurred when retrieving order (id - "+orderid+ "): "+e.getMessage());
 
         } 
 

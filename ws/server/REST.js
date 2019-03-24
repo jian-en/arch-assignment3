@@ -5,8 +5,8 @@
 * Project: Assignment A3
 * Copyright: Copyright (c) 2019 Carnegie Mellon University
 * Versions:
-*   1.1 March 2019 - Added authentication, delete, and logging (Team Data61)
 *   1.0 February 2018 - Initial write of assignment 3 for 2018 architectures course(ajl).
+*   1.1 March 2019 - Added authentication, delete, and logging (Team Data61)
 *
 * Description: This module provides the restful webservices for the Server.js Node server. This module contains GET,
 * and POST services.  
