@@ -29,6 +29,7 @@ var express = require("express");             //express is a Node.js web applica
 var mysql   = require("mysql");               //Database
 var bodyParser  = require("body-parser");     //Javascript parser utility
 var rest = require("./REST.js");              //REST services/handler module
+var basicAuth = require("./BasicAuth.js");
 var app  = express();                         //express instance
 
 // Function definition
@@ -73,7 +74,11 @@ REST.prototype.configureExpress = function(connection) {
       app.use(bodyParser.json());
       app.use(bodyParser.text());
       var router = express.Router();
+
+      app.use(basicAuth);
+      // api routes
       app.use('/api', router);
+
       var rest_router = new rest(router,connection);
       self.startServer();
 }

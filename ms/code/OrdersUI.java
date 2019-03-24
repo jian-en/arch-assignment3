@@ -2,7 +2,7 @@
 * File:OrdersUI.java
 * Course: 17655
 * Project: Assignment A3
-* Copyright: Copyright (c) 2018 Carnegie Mellon University
+* Copyright: Copyright (c) 2019 Carnegie Mellon University
 * Versions:
 *	1.0 February 2018 - Initial write of assignment 3 (ajl).
 *
@@ -17,6 +17,7 @@
 *	- MSlientAPI - this class provides an interface to a set of microservices
 *	- RetrieveServices - this is the server-side micro service for retrieving info from the ms_orders database
 *	- CreateServices - this is the server-side micro service for creating new orders in the ms_orders database
+*	- DeleteServices - this is the server-side micro service for deleting an order in the ms_orders database
 *
 ******************************************************************************************************************/
 
@@ -38,6 +39,8 @@ public class OrdersUI
 		boolean error = false;						// error flag
 		char    option;								// Menu choice from user
 		Console c = System.console();				// Press any key
+		String  username = null;                    // Input username
+		String  password = null;                    // Input password
 		String  date = null;						// order date
 		String  first = null;						// customer first name
 		String  last = null;						// customer last name
@@ -55,15 +58,33 @@ public class OrdersUI
 		/////////////////////////////////////////////////////////////////////////////////
 
 		while (!done)
-		{	
-			// Here, is the main menu set of choices
+		{
+			// Pre: authentication process
+			if (!api.authFlag) {
+				System.out.println("Enter your username: \n");
+				username = keyboard.nextLine();
+				System.out.println("Enter your password: \n");
+				password = keyboard.nextLine();
+				try {
+					if (!api.authenticateUser(username, password)){
+						System.out.println( "Invalid user credentials!\n" );
+						continue;
+					}
+				} catch (Exception e) {
+					System.out.println("Incorrect User Credentials! Try again.\n");
+					continue;
+				}
+			}
 
+
+			// Here, is the main menu set of choices
 			System.out.println( "\n\n\n\n" );
 			System.out.println( "Orders Database User Interface: \n" );
 			System.out.println( "Select an Option: \n" );
 			System.out.println( "1: Retrieve all orders in the order database." );
 			System.out.println( "2: Retrieve an order by ID." );
-			System.out.println( "3: Add a new order to the order database." );				
+			System.out.println( "3: Add a new order to the order database." );
+			System.out.println( "4: Remove an order from the order database." );
 			System.out.println( "X: Exit\n" );
 			System.out.print( "\n>>>> " );
 			option = keyboard.next().charAt(0);	
@@ -193,6 +214,37 @@ public class OrdersUI
 
 				option = ' '; //Clearing option. This incase the user enterd X/x the program will not exit.
 
+			} // if
+
+			//////////// option 4 ////////////
+
+			if ( option == '4' )
+			{
+				error = true;
+
+				while (error)
+				{
+					System.out.print( "\nEnter the order ID: " );
+					orderid = keyboard.nextLine();
+
+					try
+					{
+						Integer.parseInt(orderid);
+						error = false;
+					} catch (NumberFormatException e) {
+						System.out.println( "Not a number, please try again..." );
+					} // if
+
+				} // while
+
+				try
+				{
+					response = api.deleteOrder(orderid);
+					System.out.println(response);
+
+				} catch (Exception e) {
+					System.out.println("Request failed:: " + e);
+				}
 			} // if
 
 			//////////// option X ////////////

@@ -1,2 +1,5 @@
 .idea/
 *.class
+*.log
+*.log.lck
+.DS_Store

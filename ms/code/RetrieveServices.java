@@ -63,13 +63,28 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 
     } // main
 
+    // Authenticate with given credentials using authenticateServices
+    private boolean authenticate(String username, String password) throws Exception {
+        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+        return obj.authenticateUser(username, password);
+    }
+
 
     // Inplmentation of the abstract classes in RetrieveServicesAI happens here.
 
     // This method will return all the entries in the orderinfo database
 
-    public String retrieveOrders() throws RemoteException
+    public String retrieveOrders(String username, String password) throws RemoteException
     {
+        // Authenticate first
+        try {
+            if (!authenticate(username, password))
+                return "Error: authentication failed!";
+        } catch (Exception e) {
+            System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
+        }
+
       	// Local declarations
 
         Connection conn = null;		// connection to the orderinfo database
@@ -155,8 +170,17 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
     // This method will returns the order in the orderinfo database corresponding to the id
     // provided in the argument.
 
-    public String retrieveOrders(String orderid) throws RemoteException
+    public String retrieveOrders(String orderid, String username, String password) throws RemoteException
     {
+        // Authenticate first
+        try {
+            if (!authenticate(username, password))
+                return "Error: authentication failed!";
+        } catch (Exception e) {
+            System.out.println("Authentication failed:: " + e);
+            return "Error: authentication service failed!";
+        }
+
       	// Local declarations
 
         Connection conn = null;		// connection to the orderinfo database

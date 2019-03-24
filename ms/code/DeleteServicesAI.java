@@ -1,13 +1,13 @@
 /******************************************************************************************************************
-* File: RetrieveServicesAI.java
+* File: DeleteServicesAI.java
 * Course: 17655
 * Project: Assignment A3
 * Copyright: Copyright (c) 2018 Carnegie Mellon University
 * Versions:
 *	1.0 February 2018 - Initial write of assignment 3 (ajl).
 *
-* Description: This class provides the abstract interface for the retrieve micro service, RetrieveServices.
-* The implementation of these abstract interfaces can be found in the RetrieveServices.java class.
+* Description: This class provides the abstract interface for the delete micro services, DeleteServices.
+* The implementation of these abstract interfaces can be found in the DeleteServices.java class.
 * The micro services are partitioned as Create, Retrieve, Update, Delete (CRUD) service packages. Each service 
 * is its own process (eg. executing in a separate JVM). It would be a good practice to follow this convention
 * when adding and modifying services. Note that services can be duplicated and differentiated by IP
@@ -17,30 +17,20 @@
 * Parameters: None
 *
 * Internal Methods:
-*  String retrieveOrders() - gets and returns all the orders in the orderinfo database
-*  String retrieveOrders(String id) - gets and returns the order associated with the order id
+*  String deleteOrder() - delete an order with specific ID in the orderinfo database
 *
 * External Dependencies: None
 ******************************************************************************************************************/
 
 import java.rmi.*;
 		
-public interface RetrieveServicesAI extends java.rmi.Remote
+public interface DeleteServicesAI extends java.rmi.Remote
 {
 	/*******************************************************
-	* Retrieves all orders from the orderinfo database and 
-	* returns them in the form of a string in ordered pairs 
-	* format.
+	* Delete an order from the provided arguments.
+	* Returns an OK message or an error string.
 	*******************************************************/
 
-	String retrieveOrders(String username, String password) throws RemoteException;
+	String deleteOrder(String id, String username, String password) throws RemoteException;
 
-	/*******************************************************
-	* Retrieves the order corresponding to the order id in 
-	* method argument form the orderinfo database and 
-	* returns the order in the form of a string in ordered 
-	* pairs format.
-	*******************************************************/	
-
-	String retrieveOrders(String id, String username, String password) throws RemoteException;
 }

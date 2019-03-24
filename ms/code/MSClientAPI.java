@@ -21,12 +21,34 @@
 * External Dependencies: None
 ******************************************************************************************************************/
 
-import java.rmi.Naming; 
-import java.rmi.RemoteException;
+import java.rmi.Naming;
 
 public class MSClientAPI
 {
 	String response = null;
+	String cachedUsername = "";
+	String cachedPassword = "";
+	boolean authFlag = false;
+
+
+	/********************************************************************************
+	 * Description: Authenticates provided user credentials.
+	 *              Note that this method is serviced by the
+	 *			   AuthenticateServices server process.
+	 * Parameters: username and password, both String
+	 * Returns: boolean true if authenticated otherwise false
+	 ********************************************************************************/
+
+	public boolean authenticateUser(String username, String password) throws Exception
+	{
+		AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+		authFlag = obj.authenticateUser(username, password);
+		if (authFlag) {
+			cachedUsername = username;
+			cachedPassword = password;
+		}
+		return authFlag;
+	}
 
 	/********************************************************************************
 	* Description: Retrieves all the orders in the orderinfo database. Note 
@@ -39,7 +61,7 @@ public class MSClientAPI
 	public String retrieveOrders() throws Exception
 	{
            RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
-           response = obj.retrieveOrders();
+           response = obj.retrieveOrders(cachedUsername, cachedPassword);
            return(response);
 	}
 	
@@ -55,7 +77,7 @@ public class MSClientAPI
 	public String retrieveOrders(String id) throws Exception
 	{
            RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
-           response = obj.retrieveOrders(id);
+           response = obj.retrieveOrders(id, cachedUsername, cachedPassword);
            return(response);	
 
 	}
@@ -69,9 +91,22 @@ public class MSClientAPI
    	public String newOrder(String Date, String FirstName, String LastName, String Address, String Phone) throws Exception
 	{
            CreateServicesAI obj = (CreateServicesAI) Naming.lookup("rmi://create-server:1099/CreateServices"); 
-           response = obj.newOrder(Date, FirstName, LastName, Address, Phone);
+           response = obj.newOrder(Date, FirstName, LastName, Address, Phone, cachedUsername, cachedPassword);
            return(response);	
 		
     }
 
+
+    /********************************************************************************
+	* Description: Delete an order with specific ID in the orderinfo database
+	* Parameters: None
+	* Returns: String that contains the status of the delete operatation
+	********************************************************************************/
+
+	public String deleteOrder(String id) throws Exception
+	{
+           DeleteServicesAI obj = (DeleteServicesAI) Naming.lookup("rmi://delete-server:1099/DeleteServices");
+           response = obj.deleteOrder(id, cachedUsername, cachedPassword);
+           return(response);
+    }
 }

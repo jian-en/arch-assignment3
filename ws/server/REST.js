@@ -28,6 +28,7 @@
 
 var mysql   = require("mysql");     //Database
 const logInstance = require("./logger"); //Logging instance
+var userService = require('./UserService');
 
 function REST_ROUTER(router,connection) {
     var self = this;
@@ -38,9 +39,25 @@ function REST_ROUTER(router,connection) {
 // contents of the URL
 
 REST_ROUTER.prototype.handleRoutes= function(router,connection) {
+    // POST with username and password to authenticate the user
+    // req parameter is the request object
+    // res parameter is the response object
+    router.post("/authenticate",function (req,res) {
+        var logging_rest = "POST /authenticate ";
+        user = userService.authenticate(req.body);
+        logInstance.write("INFO", logging_rest + " attempting to authenticate user: " + req.body);
+        if (user) {
+            logInstance.write("INFO", logging_rest + " successfully authenticated user: " + req.body);
+            res.json(user);
+        } else {
+            logInstance.write("ERROR", logging_rest + " unable to authenticate user: " + req.body);
+            res.status(400).json({ message: 'Username or password is incorrect!' });
+        }
+
+    });
 
     // GET with no specifier - returns system version information
-    // req paramdter is the request object
+    // req parameter is the request object
     // res parameter is the response object
 
     router.get("/",function(req,res){
@@ -62,17 +79,17 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
         query = mysql.format(query,table);
         connection.query(query,function(err,rows){
             if(err) {
-                logInstance.write("INFO", logging_rest + "Error executing MySQL query");
+                logInstance.write("ERROR", logging_rest + "Error executing MySQL query");
                 res.json({"Error" : true, "Message" : "Error executing MySQL query"});
             } else {
-                logInstance.write("ERROR", logging_rest + "Successfully got the following orders: " + JSON.stringify(rows));
+                logInstance.write("INFO", logging_rest + "Successfully got the following orders: " + JSON.stringify(rows));
                 res.json({"Error" : false, "Message" : "Success", "Orders" : rows});
             }
         });
     });
 
     // GET for /orders/order id specifier - returns the order for the provided order ID
-    // req paramdter is the request object
+    // req parameter is the request object
     // res parameter is the response object
      
     router.get("/orders/:order_id",function(req,res){
@@ -125,6 +142,29 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
         });
     });
 
+
+    // DELETE for /orders/order id specifier - remove an order with specific order ID
+    // req parameter is the request object
+    // res parameter is the response object
+
+    router.delete("/orders/:order_id", function(req, res) {
+        var order_id = req.params.order_id;
+        console.log("Deleting order with order ID: ", order_id);
+        var logging_rest = "DELETE /orders/" + order_id + " ";
+
+        var query = "DELETE FROM ?? WHERE ??=?";
+        var table = ["orders", "order_id", order_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows){
+            if(err) {
+                logInstance.write("ERROR", logging_rest + "Error executing MySQL query");
+                res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+            } else {
+                logInstance.write("INFO", logging_rest + "Successfully deleted the order!");
+                res.json({"Error" : false, "Message" : "Removed " + rows.affectedRows + " row(s) successfully."});
+            }
+        });
+    });
 }
 
 // The next line just makes this module available... think of it as a kind package statement in Java

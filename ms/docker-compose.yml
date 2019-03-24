@@ -6,10 +6,21 @@ services:
     command: bash -c "javac *.java && java OrdersUI"
     tty: true
     stdin_open: true
+    volumes:
+      - ./code:/var/www/java
+
+  delete-server:
+    build: code/
+    command: bash -c "./start_delete.sh"
+    depends_on:
+     mysql-container:
+        condition: service_healthy
 
   retrieve-server:
     command: bash -c "./start_retrieve.sh"
     build: code/
+    volumes:
+      - ./code:/var/www/java
     depends_on:
      mysql-container:
         condition: service_healthy
@@ -17,10 +28,18 @@ services:
   create-server:
     command: bash -c "./start_create.sh"
     build: code/
-    depends_on:
+    volumes:
+      - ./code:/var/www/java
+
     depends_on:
      mysql-container:
         condition: service_healthy
+
+  authenticate-server:
+    command: bash -c "./start_authenticate.sh"
+    build: code/
+    volumes:
+      - ./code:/var/www/java
 
   mysql-container:
     build: ../Database/
