@@ -235,6 +235,7 @@ public class WSClientAPI
 		//Configure the POST connection for the parameters
 		conn.setRequestMethod("DELETE");
 		conn.setRequestProperty("Accept-Language", "en-GB,en;q=0.5");
+		conn.setRequestProperty("Authorization", String.format("Basic %s", token));
 		conn.setRequestProperty("charset", "utf-8");
 
 		//Loop through the input and build the response string.
