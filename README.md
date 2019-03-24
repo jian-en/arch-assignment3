@@ -1,19 +1,31 @@
-# How to evaluate and test the project
+# How to execute the project
 
 ----------------------------------------
 
-# How to develop the project in docker-compose
-## Web Services
-1. Go to **ws** folder
-2. Run *docker-compose up --build --detach*
-3. Run *docker attach ws_client_1*
-4. Input 1, 2, 3, X to interact
-### For develop the server
-1. Change the server side code
-2. Run *docker-compose restart server*, it will save you tons of time
+### Database Setup
+1. Go to root path of the project
+2. run `mysql -u root -p`
+3. run `source dbtemplate.sql;` to create databases `ws_orderinfo` and `ms_orderinfo`
 
-## Micro Services
-1. Go to **ms** folder
-2. Run *docker-compose up --build --detach*
-3. Run *docker attach ms_client_1*
-4. Input 1, 2, 3, X to interact
+*Note* We connect to mysql service with username `root` and password `tmp`.
+
+
+### starting Micro Services
+1. compile run: `javac *.java`
+2. start services: 
+    - `rmiregistry &`
+    - `java -cp .:mysql-connector-java-5.1.45-bin.jar DeleteServices`
+    - `java -cp .:mysql-connector-java-5.1.45-bin.jar CreateServices`
+    - `java -cp .:mysql-connector-java-5.1.45-bin.jar RetrieveServices`
+    - `java -cp .:mysql-connector-java-5.1.45-bin.jar AuthenticateServices`
+3. run UI: `java OrdersUI`
+
+***Note*** The authentication to access our service: username `test` and password `test`.
+
+### starting Web Services
+1. compile run: `javac *.java`
+2. install node packages: `npm install --quiet`
+3. start server: `node Server.js`
+4. run UI: `java OrdersUI`
+
+***Note*** The authentication to access our service: username `test` and password `test`.
