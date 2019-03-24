@@ -45,12 +45,12 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
     router.post("/authenticate",function (req,res) {
         var logging_rest = "POST /authenticate ";
         user = userService.authenticate(req.body);
-        logInstance.write("INFO", logging_rest + " attempting to authenticate user: " + JSON.stringify(req.body));
+        logInstance.write("INFO", logging_rest + " attempting to authenticate user: " + JSON.stringify(req.body.username));
         if (user) {
-            logInstance.write("INFO", logging_rest + " successfully authenticated user: " + JSON.stringify(req.body));
+            logInstance.write("INFO", logging_rest + " successfully authenticated user: " + JSON.stringify(req.body.username));
             res.json(user);
         } else {
-            logInstance.write("ERROR", logging_rest + " unable to authenticate user: " + JSON.stringify(req.body));
+            logInstance.write("ERROR", logging_rest + " unable to authenticate user: " + JSON.stringify(req.body.username));
             res.status(400).json({ message: 'Username or password is incorrect!' });
         }
 
