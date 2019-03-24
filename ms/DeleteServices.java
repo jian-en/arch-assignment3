@@ -117,7 +117,11 @@ public class DeleteServices extends UnicastRemoteObject implements DeleteService
             rows_affected = stmt.executeUpdate(sql);
 
             // Log info of order deleted
-            logger.logInfo("Order "+id+" successfully deleted from the database.");
+            if (rows_affected == 0) {
+                logger.logInfo("Order "+id+" doesn't exist in database.");
+            } else {
+                logger.logInfo("Order "+id+" successfully deleted from the database.");
+            }
 
             // clean up the environment
 

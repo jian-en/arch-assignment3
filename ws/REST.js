@@ -160,7 +160,11 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
                 logInstance.write("ERROR", logging_rest + "Error executing MySQL query");
                 res.json({"Error" : true, "Message" : "Error executing MySQL query"});
             } else {
-                logInstance.write("INFO", logging_rest + "Successfully deleted the order!");
+                if (rows.affectedRows == 0) {
+                    logInstance.write("INFO", logging_rest + "The order doesn't exist in database.");
+                } else {
+                    logInstance.write("INFO", logging_rest + "Successfully deleted the order!");
+                }
                 res.json({"Error" : false, "Message" : "Removed " + rows.affectedRows + " row(s) successfully."});
             }
         });
