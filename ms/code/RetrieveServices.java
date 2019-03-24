@@ -132,6 +132,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
             //Log the orders that are retrieved
             logger.logInfo("User successfully retrieved all the orders from database - \n" + ReturnString);
 
+
             //Clean-up environment
 
             rs.close();

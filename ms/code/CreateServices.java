@@ -116,7 +116,6 @@ public class CreateServices extends UnicastRemoteObject implements CreateService
         } catch(Exception e) {
 
             ReturnString = e.toString();
-
             logger.logError("An error has occur when creating order: " + e.getMessage());
         } 
         

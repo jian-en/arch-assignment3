@@ -2,9 +2,9 @@
  * File:LogToFile.java
  * Course: 17655
  * Project: Assignment A3
- * Copyright: Copyright (c) 2018 Carnegie Mellon University
+ * Copyright: Copyright (c) 2019 Carnegie Mellon University
  * Versions:
- *	1.0 March 2019 - Initial write of assignment 3.
+ *	1.0 March 2019 - Initial write of assignment 3 (BKW/IZ).
  *
  * Description: This class is used to provide Logger object instance and the methods for other classes to access.
  *
