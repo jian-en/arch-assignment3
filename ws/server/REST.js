@@ -3,8 +3,9 @@
 * File:REST.js
 * Course: 17655
 * Project: Assignment A3
-* Copyright: Copyright (c) 2018 Carnegie Mellon University
+* Copyright: Copyright (c) 2019 Carnegie Mellon University
 * Versions:
+*   1.1 March 2019 - Added authentication, delete, and logging (Team Data61)
 *   1.0 February 2018 - Initial write of assignment 3 for 2018 architectures course(ajl).
 *
 * Description: This module provides the restful webservices for the Server.js Node server. This module contains GET,
@@ -26,6 +27,7 @@
 ******************************************************************************************************************/
 
 var mysql   = require("mysql");     //Database
+const logInstance = require("./logger"); //Logging instance
 
 function REST_ROUTER(router,connection) {
     var self = this;
@@ -43,6 +45,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
 
     router.get("/",function(req,res){
         res.json({"Message":"Orders Webservices Server Version 1.0"});
+        logInstance.write("INFO", "GET / with response message: Orders Webservices Server Version 1.0");
     });
     
     // GET for /orders specifier - returns all orders currently stored in the database
@@ -51,13 +54,18 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
   
     router.get("/orders",function(req,res){
         console.log("Getting all database entries..." );
+        var logging_rest = "GET /orders ";
+        logInstance.write("INFO", logging_rest + "Getting all database entries...");
+
         var query = "SELECT * FROM ??";
         var table = ["orders"];
         query = mysql.format(query,table);
         connection.query(query,function(err,rows){
             if(err) {
+                logInstance.write("INFO", logging_rest + "Error executing MySQL query");
                 res.json({"Error" : true, "Message" : "Error executing MySQL query"});
             } else {
+                logInstance.write("ERROR", logging_rest + "Successfully got the following orders: " + JSON.stringify(rows));
                 res.json({"Error" : false, "Message" : "Success", "Orders" : rows});
             }
         });
@@ -69,13 +77,18 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
      
     router.get("/orders/:order_id",function(req,res){
         console.log("Getting order ID: ", req.params.order_id );
+        var logging_rest = "GET /orders/" + req.params.order_id + " ";
+
+        logInstance.write("INFO", logging_rest + "Getting order ID: " + req.params.order_id);
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["orders","order_id",req.params.order_id];
         query = mysql.format(query,table);
         connection.query(query,function(err,rows){
             if(err) {
+                logInstance.write("ERROR", logging_rest + "Error executing MySQL query");
                 res.json({"Error" : true, "Message" : "Error executing MySQL query"});
             } else {
+                logInstance.write("INFO", logging_rest + "Successfully got the following order: " + JSON.stringify(rows));
                 res.json({"Error" : false, "Message" : "Success", "Users" : rows});
             }
         });
@@ -89,13 +102,24 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection) {
         //console.log("url:", req.url);
         //console.log("body:", req.body);
         console.log("Adding to orders table ", req.body.order_date,",",req.body.first_name,",",req.body.last_name,",",req.body.address,",",req.body.phone);
+        var logging_rest = "POST /orders ";
+        var order_details = "order_date: " + req.body.order_date + "\n"
+                            + "first_name: " + req.body.first_name + "\n"
+                            + "last_name: " + req.body.last_name + "\n"
+                            + "address: " + req.body.address + "\n"
+                            + "phone: " + req.body.phone;
+
+        logInstance.write("INFO", logging_rest + "Adding the following order: \n" + order_details);
+
         var query = "INSERT INTO ??(??,??,??,??,??) VALUES (?,?,?,?,?)";
         var table = ["orders","order_date","first_name","last_name","address","phone",req.body.order_date,req.body.first_name,req.body.last_name,req.body.address,req.body.phone];
         query = mysql.format(query,table);
         connection.query(query,function(err,rows){
             if(err) {
+                logInstance.write("ERROR", logging_rest + "Error executing MySQL query");
                 res.json({"Error" : true, "Message" : "Error executing MySQL query"});
             } else {
+                logInstance.write("INFO", logging_rest + "Successfully added the order!");
                 res.json({"Error" : false, "Message" : "User Added !"});
             }
         });
