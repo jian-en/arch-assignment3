@@ -5,6 +5,7 @@
  * Copyright: Copyright (c) 2019 Carnegie Mellon University
  * Versions:
  *	1.0 March 2019 - Initial write of assignment 3 (fj).
+ *  1.1 March 2019 - Updated logging function (BKW/IZ).
  *
  * Description: This class provides the concrete implementation of the authenticate micro services. These services run
  * in their own process (JVM).
@@ -31,6 +32,9 @@ public class AuthenticateServices extends UnicastRemoteObject implements Authent
   // Hardcode the credential for simplicity
   static final String USERNAME = "test";
   static final String PASSWORD = "test";
+
+  // Create new log file
+  LogToFile logger = new LogToFile("./microservice_authenticate");
 
   // Do nothing constructor
   public AuthenticateServices() throws RemoteException {}
@@ -63,10 +67,15 @@ public class AuthenticateServices extends UnicastRemoteObject implements Authent
   public boolean authenticateUser(String username, String password) throws RemoteException
   {
     if (username.equals(USERNAME) && password.equals(PASSWORD)) {
+
+      //Log the authentication info
+      logger.logInfo("User logged in successfully.");
       return true;
     }
-    else
+    else {
+      logger.logError("User log in failed.");
       return false;
+    }
   } // end of the authenticateUser
 
 } // AuthenticateServices
