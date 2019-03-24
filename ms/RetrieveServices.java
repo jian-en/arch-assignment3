@@ -29,7 +29,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 { 
     // Set up the JDBC driver name and database URL
     static final String JDBC_CONNECTOR = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://mysql-container/ms_orderinfo?autoReconnect=true&useSSL=false";
+    static final String DB_URL = "jdbc:mysql://localhost/ms_orderinfo?autoReconnect=true&useSSL=false";
 
     // Set up the orderinfo database credentials
     static final String USER = "root";
@@ -62,7 +62,7 @@ public class RetrieveServices extends UnicastRemoteObject implements RetrieveSer
 
     // Authenticate with given credentials using authenticateServices
     private boolean authenticate(String username, String password) throws Exception {
-        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+        AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://localhost:1099/AuthenticateServices");
         return obj.authenticateUser(username, password);
     }
 

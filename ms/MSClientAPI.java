@@ -41,7 +41,7 @@ public class MSClientAPI
 
 	public boolean authenticateUser(String username, String password) throws Exception
 	{
-		AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://authenticate-server:1099/AuthenticateServices");
+		AuthenticateServicesAI obj = (AuthenticateServicesAI) Naming.lookup("rmi://localhost:1099/AuthenticateServices");
 		authFlag = obj.authenticateUser(username, password);
 		if (authFlag) {
 			cachedUsername = username;
@@ -60,7 +60,7 @@ public class MSClientAPI
 
 	public String retrieveOrders() throws Exception
 	{
-           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
+           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://localhost:1099/RetrieveServices");
            response = obj.retrieveOrders(cachedUsername, cachedPassword);
            return(response);
 	}
@@ -76,7 +76,7 @@ public class MSClientAPI
 
 	public String retrieveOrders(String id) throws Exception
 	{
-           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://retrieve-server:1099/RetrieveServices");  
+           RetrieveServicesAI obj = (RetrieveServicesAI) Naming.lookup("rmi://localhost:1099/RetrieveServices");
            response = obj.retrieveOrders(id, cachedUsername, cachedPassword);
            return(response);	
 
@@ -90,7 +90,7 @@ public class MSClientAPI
 
    	public String newOrder(String Date, String FirstName, String LastName, String Address, String Phone) throws Exception
 	{
-           CreateServicesAI obj = (CreateServicesAI) Naming.lookup("rmi://create-server:1099/CreateServices"); 
+           CreateServicesAI obj = (CreateServicesAI) Naming.lookup("rmi://localhost:1099/CreateServices"); 
            response = obj.newOrder(Date, FirstName, LastName, Address, Phone, cachedUsername, cachedPassword);
            return(response);	
 		
@@ -105,7 +105,7 @@ public class MSClientAPI
 
 	public String deleteOrder(String id) throws Exception
 	{
-           DeleteServicesAI obj = (DeleteServicesAI) Naming.lookup("rmi://delete-server:1099/DeleteServices");
+           DeleteServicesAI obj = (DeleteServicesAI) Naming.lookup("rmi://localhost:1099/DeleteServices");
            response = obj.deleteOrder(id, cachedUsername, cachedPassword);
            return(response);
     }
