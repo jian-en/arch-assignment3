@@ -2,4 +2,5 @@
 *.class
 *.log
 *.log.lck
+*.iml
 .DS_Store
