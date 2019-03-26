@@ -1,11 +1,14 @@
-# How to execute the project
+# How to run the project
 
 ### Database Setup
 1. Go to root path of the project
 2. run `mysql -u root -p`
-3. run `source dbtemplate.sql;` to create databases `ws_orderinfo` and `ms_orderinfo`
 
 ***Note*** We connect to mysql service with username `root` and password `tmp`. You **must** change them if necessary. Please notify us if you set up a different MySQL username/password pair. -> jianfu@andrew.cmu.edu
+
+3. run `source dbtemplate.sql;` to create databases `ws_orderinfo` and `ms_orderinfo`
+
+
 
 ### Starting Micro Services
 1. compile run: `javac *.java`
