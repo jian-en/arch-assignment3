@@ -5,9 +5,9 @@
 2. run `mysql -u root -p`
 3. run `source dbtemplate.sql;` to create databases `ws_orderinfo` and `ms_orderinfo`
 
-*Note* We connect to mysql service with username `root` and password `tmp`.
+***Note*** We connect to mysql service with username `root` and password `tmp`. You **must** change them if necessary. Please notify us if you set up a different MySQL username/password pair. -> jianfu@andrew.cmu.edu
 
-### starting Micro Services
+### Starting Micro Services
 1. compile run: `javac *.java`
 2. start services: 
     - `rmiregistry &`
@@ -19,7 +19,7 @@
 
 ***Note*** The authentication to access our service: username `test` and password `test`.
 
-### starting Web Services
+### Starting Web Services
 1. compile run: `javac *.java`
 2. install node packages: `npm install --quiet`
 3. start server: `node Server.js`
@@ -27,7 +27,7 @@
 
 ***Note*** The authentication to access our service: username `test` and password `test`.
 
-### three features we added
+### Three features we added
 1. Delete an order info by the id
 2. Authenticate the user before the other services will be used
 3. Log the services used into log files
